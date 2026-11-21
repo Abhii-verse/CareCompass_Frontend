@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b6b63"><title>CareCompass | BedFinder Blitz</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+ <a class="brand" href="#"><span class="brand-icon">✚</span><span>CareCompass<small>BedFinder Blitz</small></span></a>
+ <nav><a href="#directory">Hospitals</a><a href="#map-section">Map</a><button id="openAdmin" class="nav-button">Admin console</button></nav>
+</header>
+<main>
+<section class="hero">
+ <div><p class="eyebrow">EMERGENCY CARE, WITHOUT THE GUESSWORK</p><h1>Find the right care.<br><em>Faster.</em></h1>
+ <p class="hero-copy">Find nearby hospitals, compare available facilities and get directions in a few taps.</p>
+ <div class="hero-actions"><a class="btn btn-red" href="tel:108">☎ Call Ambulance · 108</a><button id="useLocation" class="btn btn-pale">◎ Use my location</button></div>
+ <p class="disclaimer">Hackathon prototype: all hospital records and bed counts are simulated sample data. They are NOT live or medically verified. Always call emergency services and confirm with a hospital.</p></div>
+ <div class="hero-card"><div class="hero-card-head"><span class="pulse"></span> DEMO NETWORK OVERVIEW <span class="tag">SAMPLE DATA</span></div>
+  <div class="stats"><div><b id="hospitalCount">15</b><span>Hospitals</span></div><div><b id="icuTotal">—</b><span>ICU beds</span></div><div><b id="oxygenTotal">—</b><span>Oxygen beds</span></div></div>
+  <div class="hero-card-foot">Counts update when you use the demo admin console.</div>
+ </div>
+</section>
+<section class="urgent"><div><b>Is this a medical emergency?</b><span>Call emergency services now. Do not delay care to use this directory.</span></div><a href="tel:112">Call 112 ↗</a></section>
+<section class="section" id="directory">
+ <div class="section-head"><div><p class="eyebrow">HOSPITAL DIRECTORY</p><h2>Find available facilities</h2><p class="muted">Filter by specialty, bed type and emergency capability.</p></div><div id="locationStatus" class="location-pill">⌖ Hyderabad demo location</div></div>
+ <div class="toolbar"><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search hospital or area"></label><select id="sortSelect" aria-label="Sort results"><option value="distance">Nearest first</option><option value="icu">Most ICU beds</option><option value="general">Most general beds</option></select></div>
+ <div class="filter-block"><b>SPECIALTY</b><div id="specialtyFilters" class="chips"></div></div>
+ <div class="filter-block"><b>FACILITIES & BEDS</b><div id="facilityFilters" class="chips"></div></div>
+ <div class="result-row"><span id="resultCount">15 hospitals</span><span>Demo availability · Check update age on each card</span></div>
+ <div id="hospitalList" class="hospital-grid"></div>
+</section>
+<section class="section map-section" id="map-section"><div class="section-head"><div><p class="eyebrow">GEOGRAPHIC VIEW</p><h2>Hospitals on the map</h2><p class="muted">Choose a marker to view its hospital card. Directions open Google Maps.</p></div></div><div id="map"></div><p class="map-note">Map requires internet access. Displayed distances use straight-line Haversine calculations, not road distance or actual travel time.</p></section>
+<section class="section how"><p class="eyebrow">DESIGNED FOR QUICK DECISIONS</p><h2>Three simple steps</h2><div class="how-grid"><article><b>01</b><h3>Search nearby</h3><p>Use device location or the Hyderabad demo starting point.</p></article><article><b>02</b><h3>Check capabilities</h3><p>Filter ICU, ventilator, oxygen, trauma and specialist services.</p></article><article><b>03</b><h3>Call and navigate</h3><p>Call to verify availability before opening directions.</p></article></div></section>
+</main>
+<footer><b>CareCompass</b><span>Frontend-only hackathon prototype · Not for emergency reliance</span></footer>
+<dialog id="adminDialog">
+ <div class="dialog-head"><div><p class="eyebrow">HOSPITAL STAFF</p><h2>Bed update console</h2></div><button id="closeAdmin" class="close" aria-label="Close">×</button></div>
+ <div id="adminLogin"><p class="muted">Demo PIN: <b>2468</b></p><label class="field-label" for="adminPin">Admin PIN</label><input id="adminPin" type="password" inputmode="numeric" maxlength="8" placeholder="Enter PIN"><button id="loginBtn" class="btn btn-primary full">Unlock console</button><p id="loginError" class="error"></p></div>
+ <div id="adminPanel" hidden><label class="field-label" for="adminHospital">Hospital</label><select id="adminHospital"></select>
+  <div class="admin-grid"><label>General beds<input id="editGeneral" type="number" min="0"></label><label>ICU beds<input id="editIcu" type="number" min="0"></label><label>Ventilators<input id="editVentilator" type="number" min="0"></label><label>Oxygen beds<input id="editOxygen" type="number" min="0"></label></div>
+  <label class="field-label" for="editStatus">Emergency status</label><select id="editStatus"><option>Normal</option><option>Busy</option><option>ER Full - Divert</option></select>
+  <button id="saveBeds" class="btn btn-primary full">Save bed availability</button><p id="saveMessage" class="success" role="status"></p>
+  <p class="small-note">This prototype stores changes in this browser's local storage only. The PIN is a demo gate, not secure authentication; there is no server or multi-user sync.</p>
+ </div>
+</dialog>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="app.js"></script>
+</body></html>
